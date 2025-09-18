@@ -1,12 +1,91 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=phishing-alert-embed.html">
-    <title>Phishing-Alert</title>
-    <script>location.replace('phishing-alert-embed.html')</script>
-  </head>
-  <body>
-    <p>Redirecting… <a href="phishing-alert-embed.html">Click here if not redirected</a></p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phishing-Alert • Portfolio Embed</title>
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#121a2b; --muted:#8ea0b8; --text:#eaf1ff;
+      --accent:#6aa0ff; --chip:#1b2740; --card:#0f172a; --border:#243145;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";}
+    .wrap{max-width:900px;margin:40px auto;padding:0 20px;}
+    .card{background:linear-gradient(180deg,var(--panel),var(--card));border:1px solid var(--border);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);border-radius:18px;overflow:hidden}
+    header{padding:28px 28px 14px;border-bottom:1px solid var(--border);}
+    .title{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .badge{background:var(--chip);border:1px solid var(--border);padding:4px 10px;border-radius:999px;font-size:12px;color:var(--muted);}
+    .btns{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#111a2e;color:var(--text);text-decoration:none;font-weight:600}
+    .btn:hover{border-color:var(--accent)}
+    main{padding:24px 28px}
+    #content{line-height:1.65}
+    #content h1,#content h2,#content h3{border-bottom:1px solid var(--border);padding-bottom:.3rem;margin-top:2rem}
+    #content a{color:var(--accent)}
+    #content code{background:#0b1020;padding:.2em .4em;border-radius:6px;border:1px solid var(--border)}
+    #content pre{background:#0b1020;border:1px solid var(--border);padding:14px;border-radius:12px;overflow:auto}
+    footer{padding:16px 28px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+    .repo-pill{display:flex;align-items:center;gap:10px}
+    .repo-pill img{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+    .small{color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <div class="title">
+          <div class="repo-pill">
+            <img alt="GitHub" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
+            <div>
+              <div style="font-size:20px;font-weight:800">Phishing-Alert</div>
+              <div class="small">by <a href="https://github.com/VanderWalAZ" target="_blank" rel="noopener">VanderWalAZ</a></div>
+            </div>
+          </div>
+          <span class="badge">GitHub • Live README</span>
+        </div>
+        <div class="btns">
+          <a class="btn" href="https://github.com/VanderWalAZ/Phishing-Alert" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="btn" href="https://github.com/VanderWalAZ/Phishing-Alert/issues" target="_blank" rel="noopener">Open Issues</a>
+        </div>
+      </header>
+      <main>
+        <div id="content"><p class="small">Loading README.md…</p></div>
+      </main>
+      <footer>
+        <span class="small">Rendered from the repository README at runtime.</span>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Markdown renderer + sanitizer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script>
+    (function(){
+      const sources = [
+        "https://cdn.jsdelivr.net/gh/VanderWalAZ/Phishing-Alert@main/README.md",
+        "https://cdn.jsdelivr.net/gh/VanderWalAZ/Phishing-Alert@master/README.md"
+      ];
+      async function loadReadme(){
+        for (const url of sources){
+          try{
+            const res = await fetch(url, { cache: "no-store" });
+            if(res.ok){
+              const md = await res.text();
+              const html = marked.parse(md, { mangle:false, headerIds:true });
+              document.getElementById("content").innerHTML = DOMPurify.sanitize(html);
+              return;
+            }
+          }catch(e){}
+        }
+        document.getElementById("content").innerHTML =
+          "<p>Couldn’t load README.md. Add a README to your repo so this embed shows it.</p>";
+      }
+      loadReadme();
+    })();
+  </script>
+</body>
 </html>
